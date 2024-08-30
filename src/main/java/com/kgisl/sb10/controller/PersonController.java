@@ -31,6 +31,7 @@ public class PersonController {
  
     public PersonController(PersonService personService) {
         this.personService=personService;
+        System.out.println("hii");
     }
  
     @GetMapping

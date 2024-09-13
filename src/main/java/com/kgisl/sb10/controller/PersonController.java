@@ -27,6 +27,7 @@ public class PersonController {
     // public PersonController(PersonRepository personRepository) {
     //     this.personRepository = personRepository;
     // }
+ 
     private PersonService personService;
  
     public PersonController(PersonService personService) {
@@ -34,13 +35,13 @@ public class PersonController {
         System.out.println("hii");
     }
  
-    @GetMapping
+    @GetMapping("/getAllpersons")
     public ResponseEntity<List<Person>> getAllPersons() {
         List<Person> persons = personService.getAllPersons();
         return new ResponseEntity<>(persons, HttpStatus.OK);
     }
  
-    @PostMapping
+    @PostMapping("/createPerson")
     public ResponseEntity<Person> createPerson(@RequestBody Person person) {
         Person createdPerson = personService.createPerson(person);
         return new ResponseEntity<>(createdPerson, HttpStatus.CREATED);
@@ -66,43 +67,10 @@ public class PersonController {
  
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePerson(@PathVariable("id") int id) {
-        if (personService.getPersonById(id) == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         personService.deletePerson(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    // @GetMapping("/persons")
-    // public List<Person> getAllPersons() {
-    //     // List<Person> persons = personRepository.findAll();
-    //     // logger.info("Fetched persons: {}", persons);
-    //     return personRepository.findAll();
-    // }
+   
 
-    // @GetMapping("/persons/{id}")
-    // public ResponseEntity<Person> getPersonById(@PathVariable("id") int id) {
-    //     Optional<Person> person = personRepository.findById(id);
-    //     if (person.isPresent()) {
-    //         return new ResponseEntity<>(person.get(), HttpStatus.OK); // 200 OK
-    //     } else {
-    //         return ResponseEntity.notFound().build(); // 404 Not Found
-    //     }
-    // }
-
-    // @PostMapping("/persons")
-    // public ResponseEntity<Person> createPerson(@RequestBody Person person) {
-    //     Person createdPerson = personRepository.save(person);
-    //     return new ResponseEntity<>(createdPerson, HttpStatus.CREATED);
-    // }
-
-    // @DeleteMapping("/persons/{id}")
-    // public ResponseEntity<Void> deletePerson(@PathVariable int id) {
-    //     Optional<Person> person = personRepository.findById(id);
-    //     if (person.isPresent()) {
-    //         personRepository.deleteById(id);
-    //         return ResponseEntity.noContent().build(); // 204 No Content (success)
-    //     } else {
-    //         return ResponseEntity.notFound().build(); // 404 Not Found (failed)
-    //     }
-    // }
+ 
 }
